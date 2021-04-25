@@ -6,10 +6,12 @@ export ZSH="/Users/tkma4aq/.oh-my-zsh"
 export no_proxy=localhost,127.0.0.1
 export NO_PROXY=$no_proxy
 
-alias proxy-on="export HTTP_PROXY=http://geoproxy.kohls.com:3128; export HTTPS_PROXY=http://geoproxy.kohls.com:3128; export http_proxy=http://geoproxy.kohls.com:3128; export https_proxy=http://geoproxy.kohls.com:3128"
+
+PROXY=
+alias proxy-on="export HTTP_PROXY=http://$PROXY; export HTTPS_PROXY=http://$PROXY; export http_proxy=http://$PROXY; export https_proxy=http://$PROXY"
 alias proxy-off="export HTTP_PROXY=; HTTPS_PROXY=; export http_proxy=; export https_proxy=;"
 proxy-on
-nc -z proxy.kohls.com 3128 &>/dev/null || proxy-off
+nc -z $PROXY &>/dev/null || proxy-off
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,

@@ -21,4 +21,4 @@ brew install git
 brew install hashicorp/tap/vault
 brew install jenkins-x/jx/jx
 brew tap homebrew/cask-fonts
-brew cask install docker font-awesome-terminal-fonts
+brew install docker font-awesome-terminal-fonts

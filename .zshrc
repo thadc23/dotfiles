@@ -2,26 +2,17 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/Users/tkma4aq/.oh-my-zsh"
-export no_proxy=localhost,127.0.0.1
-export NO_PROXY=$no_proxy
-
-
-PROXY=
-alias proxy-on="export HTTP_PROXY=http://$PROXY; export HTTPS_PROXY=http://$PROXY; export http_proxy=http://$PROXY; export https_proxy=http://$PROXY"
-alias proxy-off="export HTTP_PROXY=; HTTPS_PROXY=; export http_proxy=; export https_proxy=;"
-proxy-on
-nc -z $PROXY &>/dev/null || proxy-off
+export ZSH="$HOME/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
-# See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
+# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 ZSH_THEME="powerlevel10k/powerlevel10k"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
-# a theme from this variable instead of looking in ~/.oh-my-zsh/themes/
+# a theme from this variable instead of looking in $ZSH/themes/
 # If set to an empty array, this variable will have no effect.
 # ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
 
@@ -32,17 +23,17 @@ CASE_SENSITIVE="true"
 # Case-sensitive completion must be off. _ and - will be interchangeable.
 # HYPHEN_INSENSITIVE="true"
 
-# Uncomment the following line to disable bi-weekly auto-update checks.
-# DISABLE_AUTO_UPDATE="true"
-
-# Uncomment the following line to automatically update without prompting.
-DISABLE_UPDATE_PROMPT="true"
+# Uncomment one of the following lines to change the auto-update behavior
+# zstyle ':omz:update' mode disabled  # disable automatic updates
+zstyle ':omz:update' mode auto      # update automatically without asking
+# zstyle ':omz:update' mode reminder  # just remind me to update when it's time
 
 # Uncomment the following line to change how often to auto-update (in days).
-# export UPDATE_ZSH_DAYS=13
-
+zstyle ':omz:update' frequency 1
+export UPDATE_ZSH_DAYS=1
+ZSH_CUSTOM_AUTOUPDATE_QUIET=true
 # Uncomment the following line if pasting URLs and other text is messed up.
-# DISABLE_MAGIC_FUNCTIONS=true
+# DISABLE_MAGIC_FUNCTIONS="true"
 
 # Uncomment the following line to disable colors in ls.
 # DISABLE_LS_COLORS="true"
@@ -54,6 +45,9 @@ DISABLE_UPDATE_PROMPT="true"
 # ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
+# You can also set it to another string to have that shown instead of the default red dots.
+# e.g. COMPLETION_WAITING_DOTS="%F{yellow}waiting...%f"
+# Caution: this setting can cause issues with multiline prompts in zsh < 5.7.1 (see #5765)
 # COMPLETION_WAITING_DOTS="true"
 
 # Uncomment the following line if you want to disable marking untracked files
@@ -73,11 +67,11 @@ DISABLE_UPDATE_PROMPT="true"
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
 # Which plugins would you like to load?
-# Standard plugins can be found in ~/.oh-my-zsh/plugins/*
-# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
+# Standard plugins can be found in $ZSH/plugins/
+# Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git docker zsh-completions brew kubectl npm oc)
+plugins=(git docker brew npm gradle-completion zsh-completions autoupdate)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -107,43 +101,25 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-fpath=(/usr/local/share/zsh-completions $fpath)
-. /usr/local/etc/bash_completion.d/cf7-cli
-. /usr/local/etc/bash_completion.d/bosh-cli
-. /usr/local/etc/bash_completion.d/kubectx
-. /usr/local/etc/bash_completion.d/kubens
+export GITLAB_TOKEN=
+export DOCKER_TOKEN=
+export LOCAL_GITLAB_TOKEN=
+export proj='/Users/tcraft/dev/projects'
 
-export proj='/Users/tkma4aq/dev/projects'
-export GOPATH="$proj/go-workspace"
-export GOBIN="$GOPATH/bin"
 alias ll='ls -latr'
-alias vault-ui='/Users/tkma4aq/scripts/vault.sh'
 alias python='/usr/bin/python'
-alias espp='/Users/tkma4aq/scripts/espp.sh'
-alias vote='/Users/tkma4aq/scripts/vote.sh'
-alias fixsound='sudo killall coreaudiod'
-alias kc='kubectl'
-alias kns='kubens'
-alias kctx='kubectx'
-alias id="id tkma4aq | sed -n 1'p' | tr ',' '\n'"
-alias groups="groups | tr ' ' '\n'"
-export PATH=$PATH:$GOBIN:/usr/local/sbin/:/usr/local/lib/node_modules
-eval "$(direnv hook $SHELL)"
+
 autoload -U compinit && compinit
 clear
+
 source ~/.p10k.zsh
 
 autoload -U +X bashcompinit && bashcompinit
-complete -o nospace -C /usr/local/bin/mc mc
-eval "$(rbenv init -)"
-export PATH="/usr/local/opt/openssl/bin:$PATH"
 
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-complete -o nospace -C /usr/local/bin/odo odo
+  [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
+  [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-export SDKMAN_DIR="/Users/tkma4aq/.sdkman"
-[[ -s "/Users/tkma4aq/.sdkman/bin/sdkman-init.sh" ]] && source "/Users/tkma4aq/.sdkman/bin/sdkman-init.sh"
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
